@@ -1,0 +1,42 @@
+import { Toaster } from 'react-hot-toast';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { getUser } from './api/getUser';
+import ProtectedRoute from './components/ProtectedRoute';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import { useEffect, useState } from 'react';
+
+function App() {
+
+  const [user, setUser] = useState(null);  // Manage user state
+  const [loading, setLoading] = useState(true);  // Add loading state
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getUser();  // Await the async getUser call
+      setUser(userData);
+      setLoading(false);  // Once done loading
+    };
+    fetchUser();
+  }, []);
+
+  if (loading) return <div>Loading...</div>
+
+  
+  return (
+    <>
+    <Router>
+      <Routes>
+        <Route path='/login' element={<Login user={user}/>} />
+        <Route path='/signup' element={<SignUp user={user}/>} />
+        <Route element={<ProtectedRoute user={user}/>}/>
+        <Route path='/' element={<Dashboard/>}/>
+      </Routes>
+    </Router>
+    <Toaster/>
+    </>
+  )
+}
+
+export default App
