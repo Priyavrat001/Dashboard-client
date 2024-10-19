@@ -1,1 +1,1 @@
-export const key = import.meta.env.VITE_BACKEND
+export const key = "https://dashboard-server-br5h.onrender.com"
