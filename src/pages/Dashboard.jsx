@@ -22,6 +22,9 @@ const Dashboard = ({ user }) => {
 
     // Load preferences from cookies on component mount
     useEffect(() => {
+        if(user){
+            return navigate("/")
+        }
         const savedAgeGroup = Cookies.get('ageGroup');
         const savedGender = Cookies.get('gender');
         const savedStartDate = Cookies.get('startDate');
@@ -112,11 +115,8 @@ const Dashboard = ({ user }) => {
         const logout = await logoutUser();
 
         if (logout) {
-            toast.success("Logout successfully");
             return navigate("/login")
         };
-
-        // if(!user) return navigate("/login")
     }
     // for sharing links to onother user
     const generateShareableLink = () => {
@@ -199,8 +199,8 @@ const Dashboard = ({ user }) => {
                         </div>
                     )}
                 </div>
-                <button onClick={generateShareableLink}>Share Chart</button>
             </div>
+                <button onClick={generateShareableLink} className='sharechartData'>Share Chart</button>
         </>
     );
 };

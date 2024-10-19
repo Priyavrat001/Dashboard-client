@@ -7,9 +7,11 @@ export const logoutUser = async()=>{
         credentials:"include"
     })
 
-    if(!response.json) return toast.error("Not able to logout");
+    if(!response.ok) return toast.error("Not able to logout");
 
     const responseJson = await response.json();
+
+    if(responseJson) return toast.success("Login SuccessFully")
 
     return responseJson
 }

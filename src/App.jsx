@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { getUser } from './api/getUser';
@@ -5,7 +6,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import { useEffect, useState } from 'react';
 
 function App() {
 

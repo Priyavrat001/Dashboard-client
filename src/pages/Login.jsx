@@ -3,7 +3,7 @@ import { userLogin } from '../api/login';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ user }) => {
+const Login = ({user}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -47,11 +47,10 @@ const Login = ({ user }) => {
         }
     };
 
-    // for not able to access the login page after login
     useEffect(() => {
-        if (user) return navigate("/")
-    }, [])
-
+      if(user) return navigate("/")
+    }, [user])
+    
 
     return (
         <div className="login-container">
