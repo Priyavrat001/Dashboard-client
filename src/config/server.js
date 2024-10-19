@@ -1,1 +1,1 @@
-export const key = import.meta.env.VITE_BACKEND_KEY
+export const key = import.meta.env.VITE_BACKEND
