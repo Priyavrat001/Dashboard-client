@@ -10,7 +10,7 @@
 
 ## Live on
 
--[Live](https://dashboard-client-v1lugmiyc-priyavrat-kumars-projects.vercel.app)
+-[Live](https://dashboard-client-xi.vercel.app/)
 
 
 # Interactive Data Visualization Dashboard

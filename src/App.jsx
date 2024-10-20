@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
 
@@ -14,9 +15,9 @@ function App() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const userData = await getUser();  // Await the async getUser call
+      const userData = await getUser();
       setUser(userData);
-      setLoading(false);  // Once done loading
+      setLoading(false);
     };
     fetchUser();
   }, []);
@@ -38,6 +39,7 @@ function App() {
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={ <SignUp />} />
+          <Route path='*' element={<PageNotFound />} /> 
         </Routes>
       </Router>
       <Toaster />
