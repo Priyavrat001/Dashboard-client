@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { userLogin } from '../api/login';
+import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { userLogin } from '../api/login';
 
-const Login = ({user}) => {
+const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -14,43 +14,17 @@ const Login = ({user}) => {
         e.preventDefault();
         setLoading(true);
 
-        const result = await userLogin(username, password);
+        const result = userLogin(username, password);
         setLoading(false);
-        
-
 
         if (result) {
             toast.success("Login successfully");
-            // After successful login, navigate and fetch user data
-            navigate("/");
-            // Fetch user data after login (`/me` is the route for fetching user info)
-            const userToken = localStorage.getItem("user-token");
-            if (userToken) {
-                const userData = await fetch(`${key}/api/v1/user/me`, {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${userToken}`,
-                        "Content-Type": "application/json"
-                    }
-                });
-
-                if (userData.ok) {
-                    const user = await userData.json();
-                    console.log("Logged in user data:", user);
-                    // Now you have the user data, use it in your app
-                } else {
-                    toast.error("Failed to fetch user data");
-                }
-            }
-        } else {
-            toast.error("Login failed, please check your credentials");
+            return navigate("/");
         }
+
+
     };
 
-    useEffect(() => {
-      if(user) return navigate("/")
-    }, [user])
-    
 
     return (
         <div className="login-container">

@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 import { userSignup } from '../api/signup';
 import { useNavigate } from 'react-router-dom';
 
-const Signup = ({user}) => {
+const Signup = () => {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -26,7 +26,7 @@ const Signup = ({user}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            await userSignup(name, username, password)
+            userSignup(name, username, password)
             toast.success('Signup successful');
             return navigate("/login")
         }
@@ -34,10 +34,6 @@ const Signup = ({user}) => {
         setName('')
         setPassword('')
     };
-
-    useEffect(() => {
-      if(user) return navigate("/")
-    }, [user])
     
     return (
         <div className="signup-container">

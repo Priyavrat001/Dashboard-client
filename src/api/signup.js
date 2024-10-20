@@ -1,25 +1,13 @@
 import {toast} from "react-hot-toast"
 import { key } from "../config/server";
+import axios from "axios";
 
 export const userSignup = async(personName, username, password)=>{
-    const response = await fetch(`${key}/api/v1/user/new`,{
-        method:"POST",
-        headers:{
-            "Content-Type": "application/json"
-        },
-        body:JSON.stringify(
-            {
-                name:personName,
-                username:username,
-                password:password
-            }
-        ),
-        credentials:"include"
-    })
+    const response = await axios.post(`${key}/api/v1/user/login`, {
+        personName,
+        username,
+        password,
+    }, {withCredentials:true});
 
-    if(!response.ok) return toast.error(response.statusText);
-
-    const responseData = response.json();
-
-    return responseData
+    return response.data;
 }

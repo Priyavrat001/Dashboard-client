@@ -8,8 +8,9 @@ import { key } from '../config/server';
 import { toast } from 'react-hot-toast';
 import { MdLogout } from "react-icons/md";
 import { logoutUser } from '../api/logout';
+import axios from 'axios';
 
-const Dashboard = ({ user }) => {
+const Dashboard = () => {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [startDate, setStartDate] = useState(null); // Start with null for no filter
@@ -22,9 +23,6 @@ const Dashboard = ({ user }) => {
 
     // Load preferences from cookies on component mount
     useEffect(() => {
-        if(user){
-            return navigate("/")
-        }
         const savedAgeGroup = Cookies.get('ageGroup');
         const savedGender = Cookies.get('gender');
         const savedStartDate = Cookies.get('startDate');
@@ -49,14 +47,14 @@ const Dashboard = ({ user }) => {
     }, [ageGroup, gender, startDate, endDate, data]);
 
     const fetchData = async () => {
-        const response = await fetch(`${key}/api/v1/data`, {
-            method: "GET",
-            credentials: "include"
+        const response = await axios.get(`${key}/api/v1/data`, {
+            withCredentials: true
         });
-        if (!response.ok) throw new Error("Not able to find the data")
-        const responseJson = await response.json();
-        setData(responseJson.filteredData);
-        setFilteredData(responseJson.filteredData); // Initially show all data
+
+        const data = response.data;
+
+        setData(data.filteredData);
+        setFilteredData(data.filteredData); // Initially show all data
     };
 
     const filterData = () => {
@@ -111,12 +109,9 @@ const Dashboard = ({ user }) => {
         filterData();
     };
 
-    const handleLogout = async() => {
-        const logout = await logoutUser();
-
-        if (logout) {
-            return navigate("/login")
-        };
+    const handleLogout = () => {
+        logoutUser();
+        return navigate("/login")
     }
     // for sharing links to onother user
     const generateShareableLink = () => {
@@ -133,24 +128,24 @@ const Dashboard = ({ user }) => {
     };
 
     useEffect(() => {
-       
-            const queryParams = new URLSearchParams(window.location.search);
 
-            const ageGroupParam = queryParams.get('ageGroup');
-            const genderParam = queryParams.get('gender');
-            const startDateParam = queryParams.get('startDate');
-            const endDateParam = queryParams.get('endDate');
+        const queryParams = new URLSearchParams(window.location.search);
 
-            if (ageGroupParam) setAgeGroup(ageGroupParam);
-            if (genderParam) setGender(genderParam);
-            if (startDateParam) setStartDate(new Date(startDateParam));
-            if (endDateParam) setEndDate(new Date(endDateParam));
-        
+        const ageGroupParam = queryParams.get('ageGroup');
+        const genderParam = queryParams.get('gender');
+        const startDateParam = queryParams.get('startDate');
+        const endDateParam = queryParams.get('endDate');
+
+        if (ageGroupParam) setAgeGroup(ageGroupParam);
+        if (genderParam) setGender(genderParam);
+        if (startDateParam) setStartDate(new Date(startDateParam));
+        if (endDateParam) setEndDate(new Date(endDateParam));
+
 
 
         fetchData();
     }, [window.location.search]);
-    
+
 
     return (
         <>
@@ -200,7 +195,7 @@ const Dashboard = ({ user }) => {
                     )}
                 </div>
             </div>
-                <button onClick={generateShareableLink} className='sharechartData'>Share Chart</button>
+            <button onClick={generateShareableLink} className='sharechartData'>Share Chart</button>
         </>
     );
 };

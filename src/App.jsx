@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-dom";
 import { getUser } from './api/getUser';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
@@ -21,22 +21,28 @@ function App() {
     fetchUser();
   }, []);
 
-  if (loading) return <div>Loading...</div>
+  console.log(user)
 
-  
+  if (loading) return <div>Loading...</div>;
+
   return (
     <>
-    <Router>
-      <Routes>
-        <Route path='/login' element={<Login user={user}/>} />
-        <Route path='/signup' element={<SignUp user={user}/>} />
-        <Route element={<ProtectedRoute user={user}/>}/>
-        <Route path='/' element={<Dashboard/>}/>
-      </Routes>
-    </Router>
-    <Toaster/>
+      <Router>
+        <Routes>
+          {/* Protected Route for Dashboard */}
+          <Route
+            path="/"
+            element={<ProtectedRoute user={user}><Dashboard /></ProtectedRoute>}
+          />
+          
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={ <SignUp />} />
+        </Routes>
+      </Router>
+      <Toaster />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

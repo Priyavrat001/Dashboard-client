@@ -1,17 +1,13 @@
 import { toast } from "react-hot-toast"
 import { key } from "../config/server"
+import axios from "axios"
 
 export const logoutUser = async()=>{
-    const response = await fetch(`${key}/api/v1/user/logout`,{
-        method:"GET",
-        credentials:"include"
+    const response = await axios.get(`${key}/api/v1/user/logout`,{
+        withCredentials:true
     })
 
-    if(!response.ok) return toast.error("Not able to logout");
+    if(response) return toast.success("Logout successFully")
 
-    const responseJson = await response.json();
-
-    if(responseJson) return toast.success("Login SuccessFully")
-
-    return responseJson
+    return response.data;
 }
