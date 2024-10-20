@@ -1,3 +1,18 @@
+# Project description
+
+## Data api 
+
+- If data is not loaded please refresh the page to load the data.
+
+## Barchart
+
+- You have to click on barchart to show the linechart and values
+
+## Live on
+
+-[Live](https://dashboard-client-v1lugmiyc-priyavrat-kumars-projects.vercel.app)
+
+
 # Interactive Data Visualization Dashboard
 
 This project is an interactive data visualization dashboard for a product analytics platform, providing real-time data on sales and user engagement. It features interactive charts, advanced filtering, cookie management, user authentication, and the ability to share URL-based views with specific filters and date ranges.
